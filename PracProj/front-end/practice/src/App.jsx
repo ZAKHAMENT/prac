@@ -1,34 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState, } from 'react'
+import { useParams, Link } from 'react-router-dom';
+
 import './App.css'
+import axios from 'axios';
+import Pagination from './Pagination';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+  const [limitData, setLimitData] = useState([]);
+  const {pageID} = useParams();
+    let amountOfPages = Math.ceil(data.length/3);
 
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      
+      try {
+        const res = await axios.get('https://jsonplaceholder.typicode.com/users');
+        setData(res.data);
+      } catch (error) {
+        console.log('Error fetching data', error);
+      }
+    }
+    fetchData();
+    
+    let skipUsers = (pageID-1) *3;
+    setLimitData(
+      data.slice(skipUsers+1, 3+1)
+    )
+  }, []);
+
+  console.log(limitData);
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Data Fetching Example</h1>
+      <div className="container">
+      {data?.map((curr, i) => (
+        <div className="individualContainer" key={i}>
+        <p >Name: {curr.name}</p>
+        <p>Username: {curr.username}</p>
+        <p>Email: {curr.email}</p>
+        </div>
+      ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      
+      {Array.from({ length: amountOfPages }, (_, i) => (
+        <span key={i}>
+          <Link to={`/${i+1}`} > 
+        <button> {i+1}</button>
+        </Link>
+        </span>
+      ))}
+      
+      </>
   )
 }
 

@@ -8,6 +8,11 @@ app.use(cookieParser());
 
 const SECRET_KEY = "mysecret";
 
+let r = 'qwerty'
+console.log(r.slice(1,5));
+    let skipUsers = (4-1) *3;
+console.log(skipUsers);
+
 
 // 🔑 Fake users with roles
 const users = [
@@ -129,4 +134,23 @@ app.post("/logout", (req, res) => {
   res.json({ message: "Logged out successfully 🚪" });
 });
 
+
+
+
+
+
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Hello World!" });
+});
+
+// Another route
+app.post("/api/sum", (req, res) => {
+  const { a, b } = req.body;
+  if (typeof a !== "number" || typeof b !== "number") {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+  res.json({ sum: a + b });
+});
+
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
+module.exports = app; // Export for testing
