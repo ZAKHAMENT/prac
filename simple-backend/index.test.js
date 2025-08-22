@@ -7,7 +7,7 @@ describe("Simple API Tests", () => {
     expect(res.statusCode).toBe(200);
     expect(res.text).toBe("Hello World!");
   });
-
+  
   test("POST /add should return sum of two numbers", async () => {
     const res = await request(app)
       .post("/add")
