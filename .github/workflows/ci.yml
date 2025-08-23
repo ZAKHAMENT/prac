@@ -1,4 +1,76 @@
-name: CI Demo
+# # name: CI Demo
+
+# # on:
+# #   push:
+# #     branches: [ "main" ]
+# #   pull_request:
+# #     branches: [ "main" ]
+
+# # jobs:
+# #   build:
+# #     runs-on: ubuntu-latest
+
+# #     defaults:
+# #       run:
+# #         working-directory: ci-demo
+
+# #     steps:
+# #       - name: Checkout repository
+# #         uses: actions/checkout@v4
+
+# #       - name: Set up Node.js
+# #         uses: actions/setup-node@v4
+# #         with:
+# #           node-version: 18
+
+# #       - name: Install dependencies
+# #         run: npm install
+
+# #       - name: Run tests
+# #         run: npm test
+
+# name: Frontend CI
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+#           cache: 'npm'
+
+#       - name: Install dependencies
+#         run: npm install
+#         working-directory: frontend   # 👈 change to your frontend folder
+
+#       - name: Run lint
+#         run: npm run lint
+#         working-directory: frontend
+
+#       - name: Run tests
+#         run: npm test -- --watchAll=false
+#         working-directory: frontend
+
+#       - name: Build project
+#         run: npm run build
+#         working-directory: frontend
+
+
+
+
+name: CI Pipeline
 
 on:
   push:
@@ -7,21 +79,25 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [frontend, backend]
 
     defaults:
       run:
-        working-directory: ci-demo
+        working-directory: ${{ matrix.project }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install dependencies
         run: npm install
