@@ -1,4 +1,4 @@
-name: CI
+name: CI Demo
 
 on:
   push:
@@ -12,19 +12,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Install dependencies
-        run: |
-          cd simple-backend
-          npm install
+        run: npm install
 
       - name: Run tests
-        run: |
-          cd simple-backend
-          npm test
+        run: npm test
