@@ -32,7 +32,7 @@ jobs:
       # Build project
       - name: Build project
         run: |
-          cd sample-netlify-app/app
+          cd sample-netlify-app
           npm run build
 
       # Deploy to Netlify
