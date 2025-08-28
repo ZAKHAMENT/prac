@@ -21,7 +21,7 @@ jobs:
 
       # Go into frontend folder
       - name: Go to frontend folder
-        run: cd sample-netlify-app/app
+        run: cd sample-netlify-app
 
       # Install dependencies
       - name: Install dependencies
@@ -38,6 +38,6 @@ jobs:
       # Deploy to Netlify
       - name: Deploy to Netlify
         run: |
-          cd sample-netlify-app/app
+          cd sample-netlify-app
           npm install -g netlify-cli
           netlify deploy --dir=dist --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
