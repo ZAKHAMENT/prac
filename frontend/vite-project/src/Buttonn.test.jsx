@@ -1,4 +1,5 @@
 // src/Button.test.jsx
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Button from "./button";
@@ -13,7 +14,7 @@ test("renders button with label", () => {
 });
 
 test("calls onClick when button is clicked", () => {
-  const handleClick = jest.fn();
+  const handleClick = jest?.fn();
   render(<Button label="Click Me" onClick={handleClick} />);
   
   const buttonElement = screen.getByText(/Click Me/i);
