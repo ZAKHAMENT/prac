@@ -9,26 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Node.js
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Install dependencies
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build project
+      # 4️⃣ Build project
       - name: Build project
         run: npm run build
 
-      # Deploy using Netlify CLI
+      # 5️⃣ Deploy to Netlify
       - name: Deploy to Netlify
         run: |
           npm install -g netlify-cli
-          netlify deploy --dir=dist --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify deploy --dir=./dist --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
