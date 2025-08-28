@@ -1,4 +1,4 @@
-name: Deploy to Netlify
+name: Deploy Frontend to Netlify
 
 on:
   push:
@@ -9,26 +9,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
+      # Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3️⃣ Install dependencies
+      # Go into frontend folder
+      - name: Go to frontend folder
+        run: cd sample-netlify-app/app
+
+      # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd sample-netlify-app/app
+          npm install
 
-      # 4️⃣ Build project
+      # Build project
       - name: Build project
-        run: npm run build
+        run: |
+          cd sample-netlify-app/app
+          npm run build
 
-      # 5️⃣ Deploy to Netlify
+      # Deploy to Netlify
       - name: Deploy to Netlify
         run: |
+          cd sample-netlify-app/app
           npm install -g netlify-cli
-          netlify deploy --dir=./dist --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify deploy --dir=dist --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
